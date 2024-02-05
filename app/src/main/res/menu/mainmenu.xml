@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/mnu_calculadora_mainmenu"
+        android:title="Calculadora"
+        app:showAsAction="collapseActionView"
+        android:icon="@drawable/keyboard_voice_fill0_wght400_grad0_opsz24"
+        >
+
+
+    </item>
+    <item
+        android:id="@+id/mnu_selos_selos"
+        android:title="Selos"
+        app:showAsAction="collapseActionView"
+        android:icon="@drawable/deployed_code_history_fill0_wght400_grad0_opsz24"
+        >
+
+
+    </item>
+</menu>
