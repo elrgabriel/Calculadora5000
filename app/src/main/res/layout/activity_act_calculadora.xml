@@ -25,6 +25,9 @@
 
         <TableRow>
 
+
+
+
             <Button
                 android:id="@+id/bt_num1_mycalculadora"
                 style="@style/botao"
