@@ -106,7 +106,7 @@ public class Act_Calculadora extends AppCompatActivity implements View.OnClickLi
             txt_visor.append(".");
         } else if (v.getId() == R.id.bt_igual_mycalculadora) {
             if (!visor.isEmpty()) {
-                //TryCatch verifica se foi lançada uma exceção, caso tenha mostra mensagem de erro no visor
+                //TryCatch verifica se foi lançada uma exceção, caso tenha, mostra mensagem de erro no visor
                 try {
                     double resultado = realizaCalculo(pegaExpressaoVisor(visor));
                     txt_visor.setText(String.valueOf(resultado));
@@ -128,11 +128,11 @@ public class Act_Calculadora extends AppCompatActivity implements View.OnClickLi
     public Stack<String> pegaExpressaoVisor(String expressao) {
         StringBuffer constroiNumero = new StringBuffer();
         Stack<String> elementosOperacao = new Stack<>();
-        //Percorre cada elemento da string que esta no visor
+        //Percorre cada elemento da string, um por um, que esta no visor
         for (int i = 0; i < expressao.length(); i++) {
             //variavel caractere recebe um caractere da string de acordo com o index
             char caractere = expressao.charAt(i);
-            //Se o caractere for um numero ou um "." ele é adicionado ao construtor de numero
+            //Se o caractere for um digito (numero) ou um "." ele é adicionado ao construtor de numero
             if (Character.isDigit(caractere) || caractere == '.') {
                 constroiNumero.append(caractere);
             }else{
@@ -146,6 +146,7 @@ public class Act_Calculadora extends AppCompatActivity implements View.OnClickLi
                 elementosOperacao.push(String.valueOf(caractere));
             }
             }
+            //adiciona o ultimo numero criado pelo controiNumero à stack
             elementosOperacao.push(constroiNumero.toString());
         return elementosOperacao;
     }
