@@ -152,9 +152,9 @@ public class Act_Calculadora extends AppCompatActivity implements View.OnClickLi
 
     public double realizaCalculo(Stack<String> elementosOperacao) {
         //Enquanto a stack conter elementos, realiza o codigo
-        double num1 = 0, num2 = 0, resultado = 0;
+        double num1, num2, resultado;
         String operador = null;
-        Stack<Double> operandos = new Stack<Double>();
+        Stack<Double> operandos = new Stack<>();
         while (!elementosOperacao.isEmpty()) {
             //Se o elemento da stack for um sinal matematico, atribui à variável operador
             if (Objects.equals(elementosOperacao.peek(), "+") || Objects.equals(elementosOperacao.peek(), "-") || Objects.equals(elementosOperacao.peek(), "*") || Objects.equals(elementosOperacao.peek(), "/")) {
