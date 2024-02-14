@@ -130,7 +130,7 @@ public class Act_Calculadora extends AppCompatActivity implements View.OnClickLi
                     num1 = null; //Limpa o conteudo da variavel num1
                     num2 = null;//Limpa o conteudo da variavel num2
                     operador = null;//Limpa o conteudo da variavel resultado
-                } else {
+                } else { //Se o botao = é clickado quando já existe uma operação feita, pega o resultado da operação e passa para num1 para dar inicio a outra operacao
                     nova_operacao = true;
                     num1 = resultado;
                     txt_visor.setText(null);
