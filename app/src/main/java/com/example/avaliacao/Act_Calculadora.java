@@ -74,8 +74,8 @@ public class Act_Calculadora extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        String visor1 = txt_visor.getText().toString(); // Passa o texto inserido na textview para String
-        String visor2 = txt_visor2.getText().toString();
+        String visor1 = txt_visor.getText().toString(); // Passa o texto inserido na textview1 para String
+        String visor2 = txt_visor2.getText().toString();// Passa o texto inserido na textview2 para String
 
         //region Lógica dos botões
         if (v.getId() == R.id.bt_mais_mycalculadora) {
@@ -115,13 +115,13 @@ public class Act_Calculadora extends AppCompatActivity implements View.OnClickLi
             if (!(visor2.isEmpty())) {
                 txt_visor2.append(".");
             }else {
-                Toast.makeText(this,"Insira um número",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"Insira um número",Toast.LENGTH_SHORT).show(); //Caso o visor esteja vazio, pede ao usuario para inserir um numero
             }
         } else if (v.getId() == R.id.bt_igual_mycalculadora) {
             //TryCatch verifica se foi lançada uma exceção, caso tenha, mostra mensagem de erro no visor
             try {
                 if (resultado==null) {
-                    buscaNum2(Double.valueOf(txt_visor2.getText().toString())); ////Pega o numero inserido na textview e atribui à variavel num2
+                    buscaNum2(Double.valueOf(txt_visor2.getText().toString())); //Pega o numero inserido na textview2 e atribui à variavel num2
                     resultado = calcula(num1, num2, operador); // Executa o metodo calcula passando o num1, num2 e o operador como parametros para que o calculo seja realizado, e atribui o resultado à variavel resultado
                     txt_visor.setText(null);//Limpa o visor 1
                     txt_visor.append(num1 + "" + operador + "" + num2 + "" + "=");//Mostra a operação completa no visor 1 para o usuario
@@ -158,53 +158,6 @@ public class Act_Calculadora extends AppCompatActivity implements View.OnClickLi
         finish();
     }
 
-//    public Stack<String> pegaExpressaoVisor(String expressao) {
-//        StringBuffer constroiNumero = new StringBuffer();
-//        Stack<String> elementosOperacao = new Stack<>();
-//        //Percorre cada elemento da string, um por um, que esta no visor
-//        for (int i = 0; i < expressao.length(); i++) {
-//            //variavel caractere recebe um caractere da string de acordo com o index
-//            char caractere = expressao.charAt(i);
-//            //Se o caractere for um digito (numero) ou um "." ele é adicionado ao construtor de numero
-//            if (Character.isDigit(caractere) || caractere == '.') {
-//                constroiNumero.append(caractere);
-//            }else{
-//                //Se o proximo elemento nao for um numero ou "." e o construtor estiver preenchido, insere o numero construido na stack
-//                if (constroiNumero.length() > 0){
-//                    elementosOperacao.push(constroiNumero.toString());
-//                    //reseta o construtor
-//                    constroiNumero.delete(0,constroiNumero.length());
-//                }
-//                //Caso o elemento for um sinal matematico, ele é adicionado à stack
-//                elementosOperacao.push(String.valueOf(caractere));
-//            }
-//            }
-//            //adiciona o ultimo numero criado pelo controiNumero à stack
-//            elementosOperacao.push(constroiNumero.toString());
-//        return elementosOperacao;
-//    }
-
-//    public double realizaCalculo(Stack<String> elementosOperacao) {
-//        //Enquanto a stack conter elementos, realiza o codigo
-//        double num1, num2, resultado;
-//        String operador = null;
-//        Stack<Double> operandos = new Stack<>();
-//        while (!elementosOperacao.isEmpty()) {
-//            //Se o elemento da stack for um sinal matematico, atribui à variável operador
-//            if (Objects.equals(elementosOperacao.peek(), "+") || Objects.equals(elementosOperacao.peek(), "-") || Objects.equals(elementosOperacao.peek(), "*") || Objects.equals(elementosOperacao.peek(), "/")) {
-//                operador = elementosOperacao.pop();
-//            } else {
-//                //Se o elemento da stack elementosOperacao for um numero, insere-os na stack operandos
-//                operandos.push(Double.valueOf(elementosOperacao.pop()));
-//            }
-//        }
-//        //Atribui os numeros da stack operandos às respectivas variaveis para realização do calculo
-//        num1 = operandos.pop();
-//        num2 = operandos.pop();
-//        //Chama o metodo calcula passando os numeros e o operador como parâmetro e atribui o resultado à variavel resultado
-//        resultado = calcula(num1, num2, operador);
-//        return resultado;
-//    }
 
     //Método Calcula executa o calculo entre o num1 e num2 de acordo com o operador utilizado.
     public double calcula(double num1, double num2, String operador) {
@@ -221,7 +174,7 @@ public class Act_Calculadora extends AppCompatActivity implements View.OnClickLi
                     throw new ArithmeticException("Não é possível dividir por 0");
                 }
                 return num1 / num2;
-            default:
+            default://defalut é executado quando nenhum dos casos existentes é executado, sendo a ação considerada como um erro de input do utilizador
                 throw new IllegalArgumentException("Operador Inválido: " + operador);
         }
 
@@ -236,19 +189,10 @@ public class Act_Calculadora extends AppCompatActivity implements View.OnClickLi
             txt_visor.append(num1.toString());//Mostra no visor 1 o numero digitado no visor2 para o usuario ver
             txt_visor.append(p_operador);//Mostra no visor1 o operador que o usuario escolheu
             limpaVisor2();//Limpa o visor2 para que o usuario possa inserir o segundo numero da operacao
-        } else if (nova_operacao) {
+        } else if (nova_operacao) { //Caso seja uma nova operaçao o metodo permite mostrar no visoe1 o sinal da operacao e atualiza a variavel operador para o calculo
             operador = p_operador;
             txt_visor.append(operador);
             nova_operacao = false;
-        } else {
-            num1 = resultado;
-            operador = p_operador;
-            txt_visor.setText(null);
-            txt_visor2.setText(null);
-            txt_visor.append(num1.toString());
-            txt_visor.append(p_operador);
-            num2 = null;
-            resultado = null;
         }
     }
 
