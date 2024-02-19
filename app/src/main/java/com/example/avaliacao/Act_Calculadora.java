@@ -16,11 +16,11 @@ import java.util.function.DoubleBinaryOperator;
 public class Act_Calculadora extends AppCompatActivity implements View.OnClickListener {
 
     Button bt0, bt1, bt2, bt3, bt4, bt5, bt6, bt7, bt8, bt9;
-    Button btmais, btmenos, btvezes, btdividir, btapaga, btvirgula, btigual;
+    Button btmais, btmenos, btvezes, btdividir, btapaga, btvirgula, btigual,btapaga_ultima_entrada,btpos_neg;
     TextView txt_visor, txt_visor2;
     Double num1, num2, resultado;//Variaveis armazenam os numeros a serem utilizados na operação assim como o resultado da operação
     String operador; // variavel armazena o operador escolhido pelo usuario
-    boolean erro,nova_operacao = false;//Variavel diz se houve um erro ou nao
+    boolean erro,nova_operacao = false,continua_operacao = false,pos_neg = false;
 
 
     @SuppressLint("MissingInflatedId")
@@ -39,12 +39,16 @@ public class Act_Calculadora extends AppCompatActivity implements View.OnClickLi
         btvezes.setOnClickListener(this);
         btdividir = findViewById(R.id.bt_dividir_mycalculadora);
         btdividir.setOnClickListener(this);
-        btapaga = findViewById(R.id.bt_apaga_mycalculadora);
+        btapaga = findViewById(R.id.bt_apagaTudo_mycalculadora);
         btapaga.setOnClickListener(this);
         btvirgula = findViewById(R.id.bt_virgula_mycalculadora);
         btvirgula.setOnClickListener(this);
         btigual = findViewById(R.id.bt_igual_mycalculadora);
         btigual.setOnClickListener(this);
+        btapaga_ultima_entrada = findViewById(R.id.bt_apagaUltimaEntrada_mycalculadora);
+        btapaga_ultima_entrada.setOnClickListener(this);
+        btpos_neg = findViewById(R.id.bt_pos_neg_mycalculadora);
+        btpos_neg.setOnClickListener(this);
         //endregion
 
         //region Botões numéricos
@@ -79,18 +83,39 @@ public class Act_Calculadora extends AppCompatActivity implements View.OnClickLi
 
         //region Lógica dos botões
         if (v.getId() == R.id.bt_mais_mycalculadora) {
-            escreveOperador("+");
+            if (!continua_operacao) {
+                escreveOperador("+");
+                continua_operacao = true;
+            } else {
+                continuaOperacao("+");
+
+            }
         } else if (v.getId() == R.id.bt_menos_mycalculadora) {
-            escreveOperador("-");
+            if (!continua_operacao) {
+                escreveOperador("-");
+                continua_operacao = true;
+            } else {
+                continuaOperacao("-");
+
+            }
         } else if (v.getId() == R.id.bt_vezes_mycalculadora) {
-            escreveOperador("*");
+            if (!continua_operacao) {
+                escreveOperador("*");
+                continua_operacao = true;
+            } else {
+                continuaOperacao("*");
+
+            }
         } else if (v.getId() == R.id.bt_dividir_mycalculadora) {
-            escreveOperador("/");
-        } else if (v.getId() == R.id.bt_apaga_mycalculadora) {
-            //Limpa os 2 visores
-            txt_visor.setText(null);
-            txt_visor2.setText(null);
-            nova_operacao = false;
+            if (!continua_operacao) {
+                escreveOperador("/");
+                continua_operacao = true;
+            } else {
+                continuaOperacao("/");
+
+            }
+        } else if (v.getId() == R.id.bt_apagaTudo_mycalculadora) {
+            apagaTudo();
         } else if (v.getId() == R.id.bt_num0_mycalculadora) {
             escreveNumero("0");
         } else if (v.getId() == R.id.bt_num1_mycalculadora) {
@@ -112,41 +137,13 @@ public class Act_Calculadora extends AppCompatActivity implements View.OnClickLi
         } else if (v.getId() == R.id.bt_num9_mycalculadora) {
             escreveNumero("9");
         } else if (v.getId() == R.id.bt_virgula_mycalculadora) {
-            if (!(visor2.isEmpty())) {
-                txt_visor2.append(".");
-            }else {
-                Toast.makeText(this,"Insira um número",Toast.LENGTH_SHORT).show(); //Caso o visor esteja vazio, pede ao usuario para inserir um numero
-            }
+           botaoPonto();
         } else if (v.getId() == R.id.bt_igual_mycalculadora) {
-            //TryCatch verifica se foi lançada uma exceção, caso tenha, mostra mensagem de erro no visor
-            try {
-                if (resultado==null) {
-                    buscaNum2(Double.valueOf(txt_visor2.getText().toString())); //Pega o numero inserido na textview2 e atribui à variavel num2
-                    resultado = calcula(num1, num2, operador); // Executa o metodo calcula passando o num1, num2 e o operador como parametros para que o calculo seja realizado, e atribui o resultado à variavel resultado
-                    txt_visor.setText(null);//Limpa o visor 1
-                    txt_visor.append(num1 + "" + operador + "" + num2 + "" + "=");//Mostra a operação completa no visor 1 para o usuario
-                    txt_visor2.setText(null);//Limpa o visor 2
-                    txt_visor2.append(String.valueOf(resultado)); // Mostra o resultado da operacao no visor2
-                    num1 = null; //Limpa o conteudo da variavel num1
-                    num2 = null;//Limpa o conteudo da variavel num2
-                    operador = null;//Limpa o conteudo da variavel resultado
-                } else { //Se o botao = é clickado quando já existe uma operação feita, pega o resultado da operação e passa para num1 para dar inicio a outra operacao
-                    nova_operacao = true;
-                    num1 = resultado;
-                    txt_visor.setText(null);
-                    txt_visor2.setText(null);
-                    txt_visor.append(num1.toString());
-                    num2 = null;
-                    resultado = null;
-                }
-            } catch (ArithmeticException | IllegalArgumentException e) {
-                erro = true;
-                txt_visor.setText(null);
-                txt_visor2.setText(null);
-                txt_visor.append("ERRO");//Mostra menssagem de erro nos visores
-                txt_visor2.append("ERRO");
-                Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show(); // Mostra a mensagem da exceção em um Toast
-            }
+           mostraResultado();
+        } else if (v.getId() == R.id.bt_apagaUltimaEntrada_mycalculadora) {
+            apagaUltimaEntrada();
+        } else if (v.getId() == R.id.bt_pos_neg_mycalculadora) {
+
         }
         //endregion
 
@@ -185,6 +182,7 @@ public class Act_Calculadora extends AppCompatActivity implements View.OnClickLi
         String visor2 = txt_visor2.getText().toString();//variavel recebe o conteudo do visor
         if (!visor2.isEmpty()) {//Se o visor nao estiver vazio, adiciona o sinal de operação
             operador = p_operador; //Atribui o operador clickado à variavel operador q irá ser utilizada para o calculo
+            continua_operacao = true;
             buscaNum1(Double.valueOf(txt_visor2.getText().toString()));//Pega o numero inserido na textview e atribui à variavel num1
             txt_visor.append(num1.toString());//Mostra no visor 1 o numero digitado no visor2 para o usuario ver
             txt_visor.append(p_operador);//Mostra no visor1 o operador que o usuario escolheu
@@ -193,6 +191,9 @@ public class Act_Calculadora extends AppCompatActivity implements View.OnClickLi
             operador = p_operador;
             txt_visor.append(operador);
             nova_operacao = false;
+        } else if (continua_operacao) {
+            novaOperacao();
+            txt_visor.append(p_operador);
         }
     }
 
@@ -219,4 +220,112 @@ public class Act_Calculadora extends AppCompatActivity implements View.OnClickLi
         txt_visor2.setText(null);
     }
 
+    public void novaOperacao (){
+        nova_operacao = true;
+        num1 = resultado;
+        txt_visor.setText(null);
+        txt_visor2.setText(null);
+        txt_visor.append(num1.toString());
+        num2 = null;
+        resultado = null;
+    }
+    public void continuaOperacao (String p_operador){
+        if (!(resultado == null)) {
+            num1 = resultado;
+            operador = p_operador;
+            resultado = null;
+            num2 = null;
+            txt_visor.setText(null);
+            txt_visor2.setText(null);
+            txt_visor.append(num1.toString());
+            txt_visor.append(p_operador);
+        }
+    }
+
+    public void mostraResultado(){
+        //TryCatch verifica se foi lançada uma exceção, caso tenha, mostra mensagem de erro no visor
+        try {
+            if (resultado == null) {
+                buscaNum2(Double.valueOf(txt_visor2.getText().toString())); //Pega o numero inserido na textview2 e atribui à variavel num2
+                resultado = calcula(num1, num2, operador); // Executa o metodo calcula passando o num1, num2 e o operador como parametros para que o calculo seja realizado, e atribui o resultado à variavel resultado
+                txt_visor.setText(null);//Limpa o visor 1
+                txt_visor.append(num1 + "" + operador + "" + num2 + "" + "=");//Mostra a operação completa no visor 1 para o usuario
+                txt_visor2.setText(null);//Limpa o visor 2
+                txt_visor2.append(String.valueOf(resultado)); // Mostra o resultado da operacao no visor2
+                num1 = null; //Limpa o conteudo da variavel num1
+                num2 = null;//Limpa o conteudo da variavel num2
+                operador = null;//Limpa o conteudo da variavel resultado
+            } else if (nova_operacao) { //Se o botao = é clickado quando já existe uma operação feita, pega o resultado da operação e passa para num1 para dar inicio a outra operacao
+                novaOperacao();
+            }
+        } catch (ArithmeticException | IllegalArgumentException e) {
+            erro = true;
+            txt_visor.setText(null);
+            txt_visor2.setText(null);
+            txt_visor.append("ERRO");//Mostra menssagem de erro nos visores
+            txt_visor2.append("ERRO");
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show(); // Mostra a mensagem da exceção em um Toast
+        }
+
+
+    }
+
+    public void botaoPonto(){
+        String visor2 = txt_visor2.getText().toString();
+        boolean temPonto = false;
+        if (!(visor2.isEmpty())) {
+            char[] ch = visor2.toCharArray();
+            for (int i = 0; i < ch.length; i++) { //Percorre a String de acordo com o seu comprimento
+                if (ch[i] == '.') { // Caso haja um '.' na string, modifica a variavel temPonto para true
+                    temPonto = true;
+                }
+            }
+            if (!temPonto){// Caso a a string nao tenha '.' é permitido adicionar o '.'
+                txt_visor2.append(".");
+            }else { // Caso a string já tenha '.', nao permite a colocação de outro '.' e mostra uma mensagem de operacao invalida
+                Toast.makeText(this,"Operação Inválida",Toast.LENGTH_SHORT).show();
+            }
+
+        }else {
+            Toast.makeText(this,"Insira um número",Toast.LENGTH_SHORT).show(); //Caso o visor esteja vazio, pede ao usuario para inserir um numero
+        }
+    }
+
+    //Botao que apaga tudo dos visores
+    public void apagaTudo() {
+        //Limpa os 2 visores
+        txt_visor.setText(null);
+        txt_visor2.setText(null);
+        resultado = null;
+        num1 = null;
+        num2 = null;
+        nova_operacao = false;
+        continua_operacao = false;
+    }
+
+    public void apagaUltimaEntrada(){
+        String visor2 = txt_visor2.getText().toString();//Pega o conteudo do visor2 e passa para uma String
+        if (!visor2.isEmpty()) {//Se o visor2 estiver preenchifo executa o codigo
+            //O metodo substring cria uma outra string a partir da original, de acordo com o index inserido como parâmetro,
+            //neste caso começa no 0, e passo o tamanho final da string -1 para que a ultima posicao seja apagada, e guardo
+            // na varivel posApagada, que é printada no visor e mostra o numero atualizado.
+            //Ex: String visor2 = 855, executa o metodo -> Substring posApagada 85.
+            String posApagada = visor2.substring(0,visor2.length()-1);
+            txt_visor2.setText(null);
+            txt_visor2.append(posApagada);
+        }else {
+            //Evita de crashar XD
+        }
+    }
+
+    public void negativoOuPositivo(){
+        String visor2 = txt_visor2.getText().toString();
+        if (!visor2.isEmpty()) {
+            double num = Double.parseDouble((visor2));
+            num=(-1);
+            txt_visor2.setText(null);
+            txt_visor2.append(String.valueOf(num));
+
+        }
+    }
 }
