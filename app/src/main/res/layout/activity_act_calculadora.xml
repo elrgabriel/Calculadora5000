@@ -4,165 +4,205 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/yellow"
+    android:background="@color/black"
     android:padding="12dp"
     android:orientation="vertical"
     tools:context=".Act_Calculadora">
 
     <TextView
         android:id="@+id/txt_visor_calculadora"
-        android:background="@color/white"
-        android:textSize="15pt"
+        android:background="@color/light_black"
+        android:textSize="12pt"
+        android:textColor="@color/white"
         android:gravity="end|center"
-        android:hint="@string/visor"
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:layout_marginTop="20dp"/>
     <TextView
         android:id="@+id/txt_visor2_calculadora"
-        android:background="@color/white"
-        android:textSize="23pt"
+        android:background="@color/light_black"
+        android:textSize="36pt"
+        android:textColor="@color/white"
         android:gravity="end|center"
-        android:hint="@string/visor"
         android:layout_width="match_parent"
         android:layout_height="100dp" />
+
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="40dp"
-        >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp">
 
-        <TableRow>
+        <TableRow android:layout_height="wrap_content">
 
             <Button
                 android:id="@+id/bt_num1_mycalculadora"
                 style="@style/botao"
                 android:onClick="onClick"
                 android:text="@string/_1" />
+
             <Button
-                android:text="@string/_2"
+                android:id="@+id/bt_num2_mycalculadora"
                 style="@style/botao"
                 android:onClick="onClick"
-                android:id="@+id/bt_num2_mycalculadora">
+                android:text="@string/_2">
+
             </Button>
+
             <Button
-                android:text="@string/_3"
+                android:id="@+id/bt_num3_mycalculadora"
                 style="@style/botao"
                 android:onClick="onClick"
-                android:id="@+id/bt_num3_mycalculadora">
+                android:text="@string/_3">
+
             </Button>
+
             <Button
-                android:text="@string/adicao"
+                android:id="@+id/bt_mais_mycalculadora"
                 style="@style/botao"
                 android:onClick="onClick"
-                android:id="@+id/bt_mais_mycalculadora">
+                android:text="@string/adicao">
+
             </Button>
         </TableRow>
 
         <TableRow>
+
             <Button
                 android:id="@+id/bt_num4_mycalculadora"
                 style="@style/botao"
                 android:onClick="onClick"
                 android:text="@string/_4" />
+
             <Button
-                android:text="@string/_5"
+                android:id="@+id/bt_num5_mycalculadora"
                 style="@style/botao"
                 android:onClick="onClick"
-                android:id="@+id/bt_num5_mycalculadora">
+                android:text="@string/_5">
+
             </Button>
+
             <Button
-                android:text="@string/_6"
+                android:id="@+id/bt_num6_mycalculadora"
                 style="@style/botao"
                 android:onClick="onClick"
-                android:id="@+id/bt_num6_mycalculadora">
+                android:text="@string/_6">
+
             </Button>
+
             <Button
-                android:text="@string/subtracao"
+                android:id="@+id/bt_menos_mycalculadora"
                 style="@style/botao"
                 android:onClick="onClick"
-                android:id="@+id/bt_menos_mycalculadora">
+                android:text="@string/subtracao">
+
             </Button>
         </TableRow>
+
         <TableRow>
+
             <Button
                 android:id="@+id/bt_num7_mycalculadora"
                 style="@style/botao"
                 android:onClick="onClick"
                 android:text="@string/_7" />
+
             <Button
-                android:text="@string/_8"
+                android:id="@+id/bt_num8_mycalculadora"
                 style="@style/botao"
                 android:onClick="onClick"
-                android:id="@+id/bt_num8_mycalculadora">
+                android:text="@string/_8">
+
             </Button>
+
             <Button
-                android:text="@string/_9"
+                android:id="@+id/bt_num9_mycalculadora"
                 style="@style/botao"
                 android:onClick="onClick"
-                android:id="@+id/bt_num9_mycalculadora">
+                android:text="@string/_9">
+
             </Button>
+
             <Button
-                android:text="@string/multiplicacao"
+                android:id="@+id/bt_vezes_mycalculadora"
                 style="@style/botao"
-                android:id="@+id/bt_vezes_mycalculadora">
+                android:text="@string/multiplicacao">
+
             </Button>
         </TableRow>
+
         <TableRow>
+
             <Button
+                android:id="@+id/bt_pos_neg_mycalculadora"
                 style="@style/botao"
-                android:text="+/-"
                 android:gravity="center_horizontal"
                 android:onClick="apaga"
-                android:id="@+id/bt_pos_neg_mycalculadora">
+                android:text="+/-">
+
             </Button>
+
             <Button
-                android:text="@string/_0"
+                android:id="@+id/bt_num0_mycalculadora"
                 style="@style/botao"
-                android:id="@+id/bt_num0_mycalculadora">
+                android:text="@string/_0">
+
             </Button>
+
             <Button
-                android:text="@string/virgula"
+                android:id="@+id/bt_virgula_mycalculadora"
                 style="@style/botao"
-                android:id="@+id/bt_virgula_mycalculadora">
+                android:text="@string/virgula">
+
             </Button>
+
             <Button
-                android:text="@string/divisao"
+                android:id="@+id/bt_dividir_mycalculadora"
                 style="@style/botao"
-                android:id="@+id/bt_dividir_mycalculadora">
+                android:text="@string/divisao">
+
             </Button>
         </TableRow>
+
         <TableRow>
+
             <Button
-                android:text="@string/c"
+                android:id="@+id/bt_apagaTudo_mycalculadora"
                 style="@style/botao"
-                android:id="@+id/bt_apagaTudo_mycalculadora">
+                android:text="@string/c">
+
             </Button>
+
             <Button
+                android:id="@+id/bt_apagaUltimaEntrada_mycalculadora"
                 style="@style/botao"
-                android:text=""
                 android:drawableLeft="@drawable/backspace"
                 android:gravity="center"
                 android:onClick="apaga"
-                android:id="@+id/bt_apagaUltimaEntrada_mycalculadora">
+                android:text="">
+
             </Button>
 
             <Button
-                android:text="@string/igual"
+                android:id="@+id/bt_igual_mycalculadora"
                 style="@style/botao"
                 android:layout_weight="60"
-                android:id="@+id/bt_igual_mycalculadora">
+                android:backgroundTint="@color/orange"
+                android:text="@string/igual">
+
             </Button>
 
         </TableRow>
+
         <TableRow>
+
             <Button
-                android:text="@string/sair"
+                android:id="@+id/bt_sair_mycalculadora"
                 style="@style/botao"
                 android:layout_span="@integer/material_motion_duration_long_1"
-                android:textSize="8pt"
                 android:onClick="menssagem"
-                android:id="@+id/bt_sair_mycalculadora">
+                android:text="@string/sair"
+                android:textSize="8pt">
+                
             </Button>
 
         </TableRow>
