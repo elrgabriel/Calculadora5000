@@ -48,7 +48,7 @@ public class Act_Selos extends AppCompatActivity implements View.OnClickListener
             txt_visor.setText(null);
             txt_selo3.setText(null);
             txt_selo5.setText(null);
-            txt_visor.setEnabled(true);//ativa a textview para input do usuario
+            txt_visor.setEnabled(true);//ativa a textview para input do usuariof
             bt_calculaSelo.setEnabled(true);//ativa o botão de calcular selo
             
         } else if (v.getId() == R.id.bt_sair_selos) {
