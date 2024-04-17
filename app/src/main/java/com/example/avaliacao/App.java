@@ -14,5 +14,6 @@ public class App extends Application {
         super.onCreate();
         ctx = getApplicationContext();
         Log.i(TAG,"App");
+        MySQL mysql = new MySQL(ctx);
     }
 }

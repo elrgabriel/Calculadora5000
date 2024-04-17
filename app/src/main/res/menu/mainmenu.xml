@@ -19,4 +19,13 @@
 
 
     </item>
+    <item
+        android:id="@+id/mnu_tabela_campeonato"
+        android:title="Campeonatos"
+        app:showAsAction="collapseActionView"
+        android:icon="@drawable/deployed_code_history_fill0_wght400_grad0_opsz24"
+        >
+
+
+    </item>
 </menu>

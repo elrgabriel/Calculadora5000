@@ -199,7 +199,7 @@
                 android:id="@+id/bt_sair_mycalculadora"
                 style="@style/botao"
                 android:layout_span="@integer/material_motion_duration_long_1"
-                android:onClick="menssagem"
+                android:onClick="mensagem"
                 android:text="@string/sair"
                 android:textSize="8pt">
                 

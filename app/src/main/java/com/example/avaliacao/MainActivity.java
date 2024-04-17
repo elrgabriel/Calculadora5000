@@ -50,12 +50,14 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Calculadora", Toast.LENGTH_LONG).show();
         }
         if (id==R.id.mnu_selos_selos){
-            FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-            Three frgtthree = Three.newInstance("","");
-            t.replace(R.id.fragmentContainerView,frgtthree);
-            t.addToBackStack(null);
-            t.commit(); //Aqui é executado.
+            Intent it = new Intent(MainActivity.this, Act_Selos.class);
+            startActivity(it);
             Toast.makeText(this, "Selos", Toast.LENGTH_SHORT).show();
+        }
+        if (id==R.id.mnu_tabela_campeonato){
+            Intent it = new Intent(MainActivity.this,Act_Campeonatos.class);
+            startActivity(it);
+            Toast.makeText(this, "Tebela de Campeonatos", Toast.LENGTH_LONG).show();
         }
         return super.onOptionsItemSelected(item);
     }

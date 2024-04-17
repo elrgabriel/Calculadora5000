@@ -150,7 +150,7 @@ public class Act_Calculadora extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    public void menssagem(View v) {
+    public void mensagem(View v) {
         Toast.makeText(this, "Saindo...", Toast.LENGTH_LONG).show();
         finish();
     }
@@ -171,7 +171,7 @@ public class Act_Calculadora extends AppCompatActivity implements View.OnClickLi
                     throw new ArithmeticException("Não é possível dividir por 0");
                 }
                 return num1 / num2;
-            default://defalut é executado quando nenhum dos casos existentes é executado, sendo a ação considerada como um erro de input do utilizador
+            default://default é executado quando nenhum dos casos existentes é executado, sendo a ação considerada como um erro de input do utilizador
                 throw new IllegalArgumentException("Operador Inválido: " + operador);
         }
 
