@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/moldura">
+
+    <TextView
+        android:id="@+id/edit_idequipa_itemquipa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="id equipa"
+        android:textAlignment="center"
+        android:textSize="22dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="22dp">
+
+    </TextView>
+
+    <ImageView
+        android:id="@+id/img_foto_equipa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:minWidth="200dp"
+        android:minHeight="200dp"
+        android:src="@drawable/ic_launcher_foreground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_idequipa_itemquipa">
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/edit_nome_equipa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:hint="Equipa"
+        android:textAlignment="center"
+        android:textSize="22dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_foto_equipa">
+    </TextView>
+    <TextView
+        android:id="@+id/edit_ano_campeonato"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:hint="Campeão"
+        android:textAlignment="center"
+        android:textSize="22dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_nome_equipa">
+    </TextView>
+
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="33dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_ano_campeonato"
+        app:layout_constraintStart_toStartOf="parent">
+        <TableRow>
+            <Button
+                android:id="@+id/bt_delete_itemcarro"
+                android:text="Delete"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:backgroundTint="@color/black">
+            </Button>
+            <Button
+                android:id="@+id/bt_update_itemcarro"
+                android:text="Update"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:backgroundTint="@color/black">
+            </Button>
+        </TableRow>
+    </TableLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

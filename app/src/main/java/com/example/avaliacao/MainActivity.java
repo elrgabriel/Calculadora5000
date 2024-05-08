@@ -6,17 +6,26 @@ import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         t.add(R.id.fragmentContainerView,one);
         t.addToBackStack(null);
         t.commit(); //Aqui é executado.
+
 
     }
 
@@ -61,4 +71,8 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+
+
 }
