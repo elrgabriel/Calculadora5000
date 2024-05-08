@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/moldura">
+    android:background="@drawable/moldura"
+    android:id="@+id/itemquipa">
 
     <TextView
         android:id="@+id/edit_idequipa_itemquipa"

@@ -43,7 +43,7 @@ public class Act_Campeonatos extends AppCompatActivity implements View.OnClickLi
         ano_campeonato = new ArrayList<>();
 
         storeDataInArrays();
-        rvAdapter = new RecycleViewAdapter(Act_Campeonatos.this,id_equipa,nome_equipa,ano_campeonato);
+        rvAdapter = new RecycleViewAdapter(Act_Campeonatos.this,this,id_equipa,nome_equipa,ano_campeonato);
         recyclerView.setAdapter(rvAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(Act_Campeonatos.this));
     }
@@ -53,7 +53,15 @@ public class Act_Campeonatos extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    void storeDataInArrays(){
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            recreate();
+        }
+    }
+
+    void storeDataInArrays(){ //busca os dados da BD e coloca nas arrays de cada elemento
         Cursor cursor = myDB.lerBD();
         if (cursor.getCount() == 0) {
             Toast.makeText(this, "Nenhum registro encontrado", Toast.LENGTH_SHORT).show();

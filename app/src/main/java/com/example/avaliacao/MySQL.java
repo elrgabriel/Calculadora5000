@@ -70,6 +70,18 @@ public class MySQL extends SQLiteOpenHelper {
         }
         return cursor;
     }
+    void atualizarBD(String id_coluna,String nome_equipa, String ano_campeonato){
+    SQLiteDatabase db = this.getWritableDatabase();
+    ContentValues cv = new ContentValues();
+    cv.put(COLUNA_EQUIPAS, nome_equipa);
+    cv.put(COLUNA_ANO, ano_campeonato);
+    long result = db.update(TABELA_NOME, cv,  " _id=?", new String[]{id_coluna});
+        if (result == -1) {
+            Toast.makeText(context,"Failed to update", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(context,"Successfully Updated!", Toast.LENGTH_SHORT).show();
+        }
+    }
 
 
 }
