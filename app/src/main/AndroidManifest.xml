@@ -23,6 +23,10 @@
 
         </activity>
         <activity
+            android:name=".Insert">
+
+        </activity>
+        <activity
             android:name=".Act_Selos">
 
         </activity>

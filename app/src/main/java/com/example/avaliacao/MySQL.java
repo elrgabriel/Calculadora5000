@@ -16,180 +16,59 @@ import java.util.List;
 
 public class MySQL extends SQLiteOpenHelper {
 
-    Context ctx;
-    public static final String EQUIPAS = "EQUIPAS";
-    public static final String PK = "PK";
-    public static final String NOME_EQUIPAS = "NOME_EQUIPAS";
-    public static final String CAMPEONATOS = "CAMPEONATOS";
-    public static final String FK = "FK";
-    public static final String ANO_CAMPEONATO = "ANO_CAMPEONATO";
-    public static final String DATABASE = "CalculadoraDB.db";
+    private Context context;
+    private static final String DB_NOME = "TabelaCampeonatos.db";
+    private static final int DB_VERSAO = 1;
+
+    private static final String TABELA_NOME = "campeonatos";
+    private static final String COLUNA_ID = "_id";
+    private static final String COLUNA_EQUIPAS = "nome_equipa";
+    private static final String COLUNA_ANO = "ano_campeao";
+    private static final String COLUNA_IMAGEM = "imagem";
 
     public MySQL(@Nullable Context context) {
-        super(context, DATABASE, null, 1);
-        ctx = context;
+        super(context, DB_NOME, null, DB_VERSAO);
+        this.context = context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sqlEquipas = "CREATE TABLE " + EQUIPAS + " ( " +
-                "    " + PK + "         INTEGER   PRIMARY KEY," +
-                "    " + NOME_EQUIPAS + " TEXT (30) " +
-                ");";
-
-        String sqlCampeonatos = "CREATE TABLE " + CAMPEONATOS + "(" +
-                FK +           "  INTEGER      REFERENCES EQUIPAS (" + PK + "), " +
-                ANO_CAMPEONATO + " INTEGER(10) " +
-                ");";
-        db.execSQL(sqlEquipas);
-        db.execSQL(sqlCampeonatos);
+        String query = "CREATE TABLE " + TABELA_NOME +
+                " (" + COLUNA_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUNA_EQUIPAS + " TEXT, " +
+                COLUNA_ANO + " INTEGER);";
+        db.execSQL(query);
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String sql1 = "Drop table if exists " + EQUIPAS + " ; ";
-        String sql2 = "Drop table if exists " + CAMPEONATOS + " ; ";
-        db.execSQL(sql1);
-        db.execSQL(sql2);
+        db.execSQL("DROP TABLE IF EXISTS " + TABELA_NOME);
         onCreate(db);
     }
-    public long inserirEquipa (Equipa equipa,Campeonatos campeonato){
-        long resp = 0;
-        SQLiteDatabase db = getWritableDatabase();
-        try{
-            db.beginTransaction();
-            ContentValues cv = new ContentValues();
-            cv.put(NOME_EQUIPAS,equipa.getNome_equipa());
-            // Insert into EQUIPAS table
-            long equipeId = db.insert(EQUIPAS, null, cv);
-            // Insert into CAMPEONATOS table with the generated PK from EQUIPAS table
-            if (equipeId != -1) {
-                cv = new ContentValues();
-                cv.put(FK, equipeId);
-                cv.put(ANO_CAMPEONATO, campeonato.getAno_campeonato()); // Assuming you have a method to get the year of championship
-                resp = db.insert(CAMPEONATOS, null, cv);
-            }
-            db.setTransactionSuccessful();
-        } catch(SQLException erro){
-            Toast.makeText(ctx,erro.getMessage(),Toast.LENGTH_LONG).show();
-        } finally {
-            db.endTransaction();
-            db.close();
+
+    void inserirEquipa(String equipa, int ano_campeonato) {
+        SQLiteDatabase db = this.getWritableDatabase(); //método pertence à classe SQLOpenHelper serve para escrever dados na tabela
+        ContentValues cv = new ContentValues(); //Armazena os dados da app para repassar para a base de dados.
+
+        cv.put(COLUNA_EQUIPAS, equipa); //Método para inserir dados na coluna, recebendo o respectivo parâmetro
+        cv.put(COLUNA_ANO, ano_campeonato);
+        long result = db.insert(TABELA_NOME, null, cv); //Método insere os dados contidos na variável de ContentValues nas respectivas colunas da base de dados
+        if (result == -1) {
+            Toast.makeText(context, "Falhou", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Inserido com Sucesso", Toast.LENGTH_SHORT).show();
         }
-        return resp;
     }
-    public List<Equipa> carregaListaEquipas() {
-        List<Equipa> equipas = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-        String sql = "SELECT * FROM " + EQUIPAS + ";";
-        Cursor cursor = db.rawQuery(sql, null);
+    Cursor lerBD(){
+        String query = "SELECT * FROM " + TABELA_NOME;
+        SQLiteDatabase db = this.getReadableDatabase();
 
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                int id = cursor.getInt(cursor.getInt(0));
-                String nomeEquipas = cursor.getString(cursor.getInt(1));
-
-                equipas.add(new Equipa(id, nomeEquipas));
-            } while (cursor.moveToNext());
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query,null);
         }
-
-        if (cursor != null) {
-            cursor.close();
-        }
-        db.close();
-
-        return equipas;
-    }
-
-    public List<Campeonatos> carregaListaCampeonatos() {
-        List<Campeonatos> campeonatos = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-        String sql = "SELECT * FROM " + CAMPEONATOS + ";";
-        Cursor cursor = db.rawQuery(sql, null);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                int equipeId = cursor.getInt(0);
-                int anoCampeonato = cursor.getInt(1);
-
-                campeonatos.add(new Campeonatos( equipeId, anoCampeonato));
-            } while (cursor.moveToNext());
-        }
-
-        if (cursor != null) {
-            cursor.close();
-        }
-        db.close();
-
-        return campeonatos;
-    }
-    public int atualizarEquipa(int equipeId, String novoNome) {
-        SQLiteDatabase db = getWritableDatabase();
-        int rowsAffected = 0;
-
-        try {
-            ContentValues values = new ContentValues();
-            values.put(NOME_EQUIPAS, novoNome);
-
-            rowsAffected = db.update(EQUIPAS, values, PK + " = ?", new String[]{String.valueOf(equipeId)});
-        } catch (SQLException erro) {
-            Toast.makeText(ctx, erro.getMessage(), Toast.LENGTH_LONG).show();
-        } finally {
-            db.close();
-        }
-
-        return rowsAffected;
-    }
-
-    public int atualizarCampeonato(int equipeId, int novoAnoCampeonato) {
-        SQLiteDatabase db = getWritableDatabase();
-        int rowsAffected = 0;
-
-        try {
-            ContentValues values = new ContentValues();
-            values.put(ANO_CAMPEONATO, novoAnoCampeonato);
-
-            rowsAffected = db.update(CAMPEONATOS, values, FK + " = ?", new String[]{String.valueOf(equipeId)});
-        } catch (SQLException erro) {
-            Toast.makeText(ctx, erro.getMessage(), Toast.LENGTH_LONG).show();
-        } finally {
-            db.close();
-        }
-
-        return rowsAffected;
-    }
-    public int deletarEquipa(int equipeId) {
-        SQLiteDatabase db = getWritableDatabase();
-        int rowsAffected = 0;
-
-        try {
-            rowsAffected = db.delete(EQUIPAS, PK + " = ?", new String[]{String.valueOf(equipeId)});
-            // If you want to delete associated championship records in CAMPEONATOS table as well,
-            // you can add the following line:
-            // db.delete(CAMPEONATOS, FK + " = ?", new String[]{String.valueOf(equipeId)});
-        } catch (SQLException erro) {
-            Toast.makeText(ctx, erro.getMessage(), Toast.LENGTH_LONG).show();
-        } finally {
-            db.close();
-        }
-
-        return rowsAffected;
-    }
-
-    public int deletarCampeonato(int equipeId) {
-        SQLiteDatabase db = getWritableDatabase();
-        int rowsAffected = 0;
-
-        try {
-            rowsAffected = db.delete(CAMPEONATOS, FK + " = ?", new String[]{String.valueOf(equipeId)});
-        } catch (SQLException erro) {
-            Toast.makeText(ctx, erro.getMessage(), Toast.LENGTH_LONG).show();
-        } finally {
-            db.close();
-        }
-
-        return rowsAffected;
+        return cursor;
     }
 
 

@@ -187,7 +187,7 @@ public class Act_Calculadora extends AppCompatActivity implements View.OnClickLi
             txt_visor.append(num1.toString());//Mostra no visor 1 o numero digitado no visor2 para o usuario ver
             txt_visor.append(p_operador);//Mostra no visor1 o operador que o usuario escolheu
             limpaVisor2();//Limpa o visor2 para que o usuario possa inserir o segundo numero da operacao
-        } else if (nova_operacao) { //Caso seja uma nova operaçao o metodo permite mostrar no visoe1 o sinal da operacao e atualiza a variavel operador para o calculo
+        } else if (nova_operacao) { //Caso seja uma nova operaçao o metodo permite mostrar no visor1 o sinal da operacao e atualiza a variavel operador para o calculo
             operador = p_operador;
             txt_visor.append(operador);
             nova_operacao = false;
