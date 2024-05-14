@@ -83,5 +83,15 @@ public class MySQL extends SQLiteOpenHelper {
         }
     }
 
+    void apagaUmaColuna(String id_linha){
+    SQLiteDatabase db = this.getWritableDatabase();
+    long result = db.delete(TABELA_NOME,"_id=?",new String[]{id_linha});
+        if (result == -1) {
+            Toast.makeText(context,"Failed to delete", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(context,"Successfully Deleted", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
 }

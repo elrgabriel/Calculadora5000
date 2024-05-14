@@ -93,12 +93,13 @@
                 android:textColor="@color/white"></Button>
 
             <Button
-                android:id="@+id/bt_cancel_update"
+                android:id="@+id/bt_delete_update"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/black"
-                android:text="Cancel"
-                android:textColor="@color/white"></Button>
+                android:backgroundTint="@color/white"
+                android:text="Delete"
+                android:textColor="@color/red"
+                android:textStyle="bold"></Button>
         </TableRow>
     </TableLayout>
 
